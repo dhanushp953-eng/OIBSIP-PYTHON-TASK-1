@@ -1,0 +1,43 @@
+from datetime import datetime
+import os
+
+DUMP_FILE = "dumpfile.txt"
+
+name = input("Enter Your Name: ")
+
+# Create file if not exists
+if not os.path.exists(DUMP_FILE):
+    open(DUMP_FILE, "w").close()
+
+print("\n=== Simple Chat Application ===")
+print("Type 'exit' to quit")
+print("Type 'view' to see all messages\n")
+
+while True:
+    message = input("You: ")
+
+    if message.lower() == "exit":
+        print("Chat Closed!")
+        break
+
+    elif message.lower() == "view":
+        print("\n----- Chat History -----")
+        with open(DUMP_FILE, "r") as file:
+            data = file.read()
+
+            if data:
+                print(data)
+            else:
+                print("No messages yet.")
+
+        print("------------------------\n")
+
+    else:
+        time_now = datetime.now().strftime("%H:%M:%S")
+
+        final_message = f"[{time_now}] {name}: {message}\n"
+
+        with open(DUMP_FILE, "a") as file:
+            file.write(final_message)
+
+        print("Message Sent!")
